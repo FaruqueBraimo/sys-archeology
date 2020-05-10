@@ -9,6 +9,7 @@
         <td class="text-left">{{ candidate.contact }}</td>
         <td class="text-left">{{ candidate.country }}</td>
         <td class="text-left">{{ candidate.email }}</td>
+        <td class="text-left"> <span class ='text-bold'> BI </span> - 1234567895B </td>
          <td class="text-left">{{ candidate.address }}</td>
 
         <td class="text-center ">
@@ -26,26 +27,12 @@
             >
 
              
-              <q-tooltip content-class="bg-indigo" :offset="[10, 10]">
-                Ver Licenças dadas ao arqueologo
+              <q-tooltip   content-class="bg-amber text-black shadow-4"
+             :offset="[10, 10]">
+                Ver detalhes licencas
               </q-tooltip>
             </q-btn>
 
-              <q-btn
-                color="white"
-                text-color="amber"
-                flat
-                round
-                icon="info"
-                @click="$emit('editCandidate', candidate)"
-            > 
-
-             
-              <q-tooltip   content-class="bg-amber text-black shadow-4"
-             :offset="[10, 10]">
-                Ver detalhes do arqueologo
-              </q-tooltip>
-            </q-btn>  
             
 
             <q-btn

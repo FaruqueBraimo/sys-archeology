@@ -17,28 +17,28 @@
       <div class="col-12" style="margin-bottom: 70px;">
         <q-markup-table>
 
-          <candidates-table-header-component />
+          <licenses-table-header-component />
 
           <tbody>
 
-          <candidates-table-row-component
-              v-for="(candidate, id) in candidates"
-                @editCandidate="editObjectCandidate = $event"
-              @deleteCandidate="confirmDeleteCandidate(id)"
+          <licenses-table-row-component
+              v-for="(license, id) in licenses"
+                @editlicense="editObjectCandidate = $event"
+                @deletelicense="confirmDeleteCandidate(id)"
              
-              :candidate="Object.assign({id: id}, candidate)"
-              :key="id"
+                 :license="Object.assign({id: id}, license)"
+                :key="id"
           />
           </tbody>
         </q-markup-table>
         <div class="row q-py-md">
           <q-btn
-              v-if="hasNext (candidates)"
+              v-if="hasNext (licenses)"
               label="Carregar mais"
               class="full-width"
               color="primary"
               :loading="loading"
-              @click="listenCandidatesOnGenericConditition('getNext10')"
+              @click="listenlicensesOnGenericConditition('getNext10')"
           />
         </div>
       </div>
@@ -59,14 +59,14 @@
 
  
 
-    <dialog-add-edit-candidate
+    <DialogAddEditlicense
         :dialogCandidate="dialogCandidate"
         :editObjectCandidate="editObjectCandidate"
         @closeDialog="closeDialog()"
     />
 
     
-   
+
     <global-confirm-dialog :confirm="confirm" @closeDialog="confirm = true" />
 
   </q-page>
@@ -77,10 +77,11 @@
 // import pdf from 'vue-pdf'
   import SearchAndAddComponent from "../../components/admin/SearchAndAddComponent";
   import GlobalConfirmDialog from "../../components/admin/dialogs/GlobalConfirmDialog";
-  import DialogAddEditCandidate from "../../components/admin/dialogs/DialogAddEditCandidate";
-  import CandidatesTableHeaderComponent from "../../components/admin/candidates/CandidatesTableHeaderComponent";
-  import CandidatesTableRowComponent from "../../components/admin/candidates/CandidatesTableRowComponent";
- 
+  import DialogAddEditlicense from "../../components/admin/dialogs/DialogAddEditlicense";
+  import  licensesTableHeaderComponent from "../../components/admin/licenses/licensesTableHeaderComponent";
+  import  licensesTableRowComponent from "../../components/admin/licenses/licensesTableRowComponent";
+
+
 export default {
   // name: 'PageName',
   data () {
@@ -106,34 +107,33 @@ export default {
     }
   },
     computed: {
-        ...mapState ('candidate', [
-            'candidates', 'uploadProgress', 'loading'
+        ...mapState ('license', [
+            'licenses', 'loading'
         ]),
        
         ...mapGetters ('candidate', [
-            'searchCandidates', 'hasNext'
+            'searchlicenses', 'hasNext'
         ]),
     },
     mounted () {
         this.updatePageTitle ()
     },
     beforeDestroy () {
-      this.listenCandidatesOnGenericConditition()
+      this.listenlicensesOnGenericConditition()
     },
   methods: {
       ...mapActions('settings', [
           'setActualPageTitle'
       ]),
 
-      ...mapActions('candidate', [
-          'deleteCandidate',
-          'updateCandidate',
-          'storeCandidatePhoto',
-          'listenCandidatesOnGenericConditition'
+      ...mapActions('license', [
+          'deletelicense',
+          'updatelicense',
+          
       ]),
 
       updatePageTitle () {
-          this.setActualPageTitle('Arqueologos (' + Object.keys(this.candidates).length + ')')
+          this.setActualPageTitle('Licenças (' + Object.keys(this.licenses).length + ')')
       },
       closeDialog () {
           this.dialogCandidate = false
@@ -145,16 +145,16 @@ export default {
       },
 
       confirmDeleteCandidate (id) {
-          let name = this.candidates[id].name
+          let name = this.licenses[id].arqId.label
           this.$q.dialog({
               title: 'Confirmar',
-              message: 'Quer mesmo deletar o ' + name + '?',
+              message: 'Quer mesmo deletar a licenca do ' + name + '?',
               cancel: true,
               persistent: true
           }).onOk(() => {
-              this.deleteCandidate({
+              this.deletelicense({
                   id: id,
-                  sucessMessage:  'Arqueologo eliminado com sucesso!'
+                  sucessMessage:  'Licenca eliminada com sucesso!'
               })
           })
       },
@@ -190,11 +190,11 @@ export default {
 
   },
   components: {
-    
+      
     GlobalConfirmDialog,
-    CandidatesTableRowComponent,
-    CandidatesTableHeaderComponent,
-    DialogAddEditCandidate,
+    licensesTableRowComponent,
+    licensesTableHeaderComponent,
+    DialogAddEditlicense,
     SearchAndAddComponent,
   },
   watch: {
@@ -208,7 +208,7 @@ export default {
               this.userToChangePhoto = null
           }
       },
-      candidates (val) {
+      licenses (val) {
           this.updatePageTitle ()
       }
   }

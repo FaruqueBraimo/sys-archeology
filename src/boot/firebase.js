@@ -28,7 +28,7 @@ export const dbUsers = db.collection("users");
 
 export const dbCandidates = db.collection("arqueologs");
 
-export const dbVacancies = db.collection("vacancies");
+export const dblicenses = db.collection("licenses");
 
 export const dbCustomers = db.collection("customers");
 

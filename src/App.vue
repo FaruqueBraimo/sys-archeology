@@ -11,6 +11,7 @@
     created () {
         this.handleAuthStateChange ()
         this.listenCandidateRealTimeChanges()
+        this.listenlicenseRealTimeChanges()
       
     },
       methods: {
@@ -23,7 +24,9 @@
               'listenCandidateRealTimeChanges',
           ]),
 
-
+ ...mapActions('license', [
+              'listenlicenseRealTimeChanges',
+          ]),
          
       }
       ,

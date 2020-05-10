@@ -1,35 +1,35 @@
 import Vue from 'vue'
-import {dbCandidates, storageRef} from '../../boot/firebase'
+import {dblicenses, storageRef} from '../../boot/firebase'
 import { showErrorMessage } from "../../functions/handle-error-messages";
 import { showSuccessMessage } from "../../functions/show-success-messages";
 import {showLoading} from "../../functions/show-loading";
 
 const state = {
 
-    candidates: {},
-    candidatesForPosition: {},
+    licenses: {},
+    licensesForPosition: {},
     loading: false,
     uploadProgress: -1,
-    candidateSearchKey:  ''
+    licensesearchKey:  ''
 
 }
 
 const mutations = {
 
-    addCandidate (state, payload) {
-       Vue.set(state.candidates, payload.id, payload.object)
+    addlicense (state, payload) {
+       Vue.set(state.licenses, payload.id, payload.object)
     },
-    addCandidatesForPosition (state, payload) {
-       Vue.set(state.candidatesForPosition, payload.id, payload.object)
+    addlicensesForPosition (state, payload) {
+       Vue.set(state.licensesForPosition, payload.id, payload.object)
     },
-    resetCandidatesForPosition (state) {
-        state.candidatesForPosition = {}
+    resetlicensesForPosition (state) {
+        state.licensesForPosition = {}
     },
-    updateCandidate (state, payload) {
-        Object.assign(state.candidates[payload.id], payload.updates)
+    updatelicense (state, payload) {
+        Object.assign(state.licenses[payload.id], payload.updates)
     },
-    deleteCandidate (state, id) {
-        Vue.delete(state.candidates, id)
+    deletelicense (state, id) {
+        Vue.delete(state.licenses, id)
     },
     loading (state, val) {
         state.loading = val
@@ -37,31 +37,31 @@ const mutations = {
     uploadProgress (state, val) {
         state.uploadProgress = val
     },
-    setCandidateSearchKey (state, val) {
-        state.candidateSearchKey = val
+    setlicensesearchKey (state, val) {
+        state.licensesearchKey = val
     },
 }
 
 const getters = {
-    searchCandidates: (state, getters) => (candidates, profissions) => {
+    searchlicenses: (state, getters) => (licenses, profissions) => {
         let object = {}
 
-        Object.keys(candidates).forEach(key => {
-            let candidate = candidates[key]
-            let userPositions = candidates[key].professions
+        Object.keys(licenses).forEach(key => {
+            let license = licenses[key]
+            let userPositions = licenses[key].professions
 
-            if (candidate.name.toLowerCase().includes(state.candidateSearchKey.toLowerCase())
-                || getters.positionNames(userPositions, profissions).toLowerCase().includes(state.candidateSearchKey.toLowerCase())
-                || candidate.bairro.toLowerCase().includes(state.candidateSearchKey.toLowerCase())
+            if (license.name.toLowerCase().includes(state.licensesearchKey.toLowerCase())
+                || getters.positionNames(userPositions, profissions).toLowerCase().includes(state.licensesearchKey.toLowerCase())
+                || license.bairro.toLowerCase().includes(state.licensesearchKey.toLowerCase())
             ) {
-                object[key] = candidate
+                object[key] = license
             }
         })
         return object
     },
-    hasNext : () => (candidatesOrEmployees) => {
+    hasNext : () => (licensesOrEmployees) => {
 
-        let total = Object.keys(candidatesOrEmployees).length
+        let total = Object.keys(licensesOrEmployees).length
 
         return total % 10 === 0;
     },
@@ -78,70 +78,70 @@ const getters = {
         }
         return strs
     },
-    candidateImage : () => (candidate) => {
-        return candidate && candidate.image ? candidate.image : '/statics/icons/icon-128x128.png'
+    licenseImage : () => (license) => {
+        return license && license.image ? license.image : '/statics/icons/icon-128x128.png'
     },
 
 }
 
 const actions = {
 
-    listenCandidatesOnGenericConditition ({ dispatch }, condition = null) {
-        let totalRetrived = Object.keys(state.candidates).length
-        let lastId = Object.keys(state.candidates)[totalRetrived -1] //Last item id
-        let lastCandidate = state.candidates[lastId] //getting candidate by Id
+    listenlicensesOnGenericConditition ({ dispatch }, condition = null) {
+        let totalRetrived = Object.keys(state.licenses).length
+        let lastId = Object.keys(state.licenses)[totalRetrived -1] //Last item id
+        let lastlicense = state.licenses[lastId] //getting license by Id
 
         let totalToGet = totalRetrived > 0 ? totalRetrived : 10
         let query = {}
 
         if (condition === 'getNext10') {
             totalToGet += 10
-            query = dbCandidates.where("aprovedAt", "==", "").orderBy("createdAt", "desc").startAt(lastCandidate).limit(totalToGet)
+            query = dblicenses.where("aprovedAt", "==", "").orderBy("createdAt", "desc").startAt(lastlicense).limit(totalToGet)
         }
         if (!condition) {
-            query = dbCandidates.where("aprovedAt", "==", "").orderBy("createdAt", "desc").limit(10)
+            query = dblicenses.where("aprovedAt", "==", "").orderBy("createdAt", "desc").limit(10)
         }
 
 
-        dispatch('listenCandidateRealTimeChanges', query)
+        dispatch('listenlicenseRealTimeChanges', query)
 
     },
 
     
 
     listenColaboratorsOnGenericConditition ({ dispatch }, condition = null) {
-        let totalRetrived = Object.keys(state.candidates).length
-        let lastId = Object.keys(state.candidates)[totalRetrived -1] //Last item id
-        let lastCandidate = state.candidates[lastId] //getting candidate by Id
+        let totalRetrived = Object.keys(state.licenses).length
+        let lastId = Object.keys(state.licenses)[totalRetrived -1] //Last item id
+        let lastlicense = state.licenses[lastId] //getting license by Id
 
         let totalToGet = totalRetrived > 0 ? totalRetrived : 10
         let query = {}
 
         if (condition === 'getNext10') {
             totalToGet += 10
-            query = dbCandidates.orderBy("createdAt", "desc").startAt(lastCandidate).limit(totalToGet)
+            query = dblicenses.orderBy("createdAt", "desc").startAt(lastlicense).limit(totalToGet)
         }
         if (!condition) {
-            query = dbCandidates.orderBy("createdAt", "desc").limit(totalToGet)
+            query = dblicenses.orderBy("createdAt", "desc").limit(totalToGet)
         }
 
 
-        dispatch('listenCandidateRealTimeChanges', query)
+        dispatch('listenlicenseRealTimeChanges', query)
 
     },
 
-    listenCandidateRealTimeChanges ({state, commit}) {
+    listenlicenseRealTimeChanges ({state, commit}) {
 
         // commit('loading', true)
 
-        dbCandidates.onSnapshot(function(snapshot) {
+        dblicenses.onSnapshot(function(snapshot) {
 
             snapshot.docChanges().forEach(function(change) {
 
                 commit('loading', false)
 
                 if (change.type === "added") {
-                    commit('addCandidate', {
+                    commit('addlicense', {
                         id: change.doc.id,
                         object: change.doc.data()
                     })
@@ -152,30 +152,30 @@ const actions = {
 
                 }
                 if (change.type === "modified") {
-                    commit('updateCandidate', {
+                    commit('updatelicense', {
                         id: change.doc.id,
                         updates: change.doc.data()
                     })
                 }
                 if (change.type === "removed") {
 
-                    commit('deleteCandidate', change.doc.id)
+                    commit('deletelicense', change.doc.id)
 
                 }
             });
         });
     },
 
-    addCandidate ({commit}, payload) {
+    addlicense ({commit}, payload) {
 
         commit('loading', true)
         payload.createdAt = new Date();
         payload.updatedAt = new Date();
 
-        dbCandidates.add(payload)
+        dblicenses.add(payload)
             .then(function(docRef) {
                 commit('loading', false)
-                showSuccessMessage('Arqueologo adicionado com sucesso!')
+                showSuccessMessage('Licenca adicionada com sucesso!')
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
@@ -184,14 +184,14 @@ const actions = {
             });
     },
 
-    updateCandidate ({commit}, payload) {
+    updatelicense ({commit}, payload) {
 
         commit('loading', true)
         payload.updates.updatedAt = new Date();
-        dbCandidates.doc(payload.id).update(payload.updates)
+        dblicenses.doc(payload.id).update(payload.updates)
             .then(function(docRef) {
                 commit('loading', false)
-                showSuccessMessage(payload.sucessMessage ? payload.sucessMessage : 'Arqueologo actualizado com sucesso!')
+                showSuccessMessage(payload.sucessMessage ? payload.sucessMessage : 'Licenca actualizada com sucesso!')
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
@@ -200,10 +200,10 @@ const actions = {
             });
     },
 
-    deleteCandidate ({commit}, payload) {
+    deletelicense ({commit}, payload) {
         commit('loading', true)
         
-        dbCandidates.doc(payload.id).delete()
+        dblicenses.doc(payload.id).delete()
             .then(function(docRef) {
                 commit('loading', false)
                 showSuccessMessage(payload.sucessMessage)
@@ -218,10 +218,10 @@ const actions = {
 
     },
 
-    setCandidateSearchKey ({commit}, text) {
-        commit('setCandidateSearchKey', text)
+    setlicensesearchKey ({commit}, text) {
+        commit('setlicensesearchKey', text)
     },
-    storeCandidatePhoto ({state, commit, dispatch}, saveObject) {
+    storelicensePhoto ({state, commit, dispatch}, saveObject) {
 
         commit('uploadProgress', -1)
 
@@ -231,7 +231,7 @@ const actions = {
             message: saveObject.progressMessage ? saveObject.progressMessage : 'Gravando imagem do candidato <b>0%</b>',
         })
 
-        let uploadTask = storageRef.child('candidatesImages/' + imageName).put(saveObject.file);
+        let uploadTask = storageRef.child('licensesImages/' + imageName).put(saveObject.file);
 
         uploadTask.on('state_changed', function(snapshot){
 
@@ -252,7 +252,7 @@ const actions = {
 
                 let updates = saveObject.isCV ? {cvUrl: downloadURL} : {image: downloadURL}
 
-                dispatch('updateCandidate',
+                dispatch('updatelicense',
                     {
                         id: saveObject.id,
                         updates: updates,

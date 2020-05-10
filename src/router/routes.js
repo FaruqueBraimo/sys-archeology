@@ -7,13 +7,12 @@ const routes = [
     children: [
       { path: '', component: () => import('pages/admin/Index.vue') },
       { path: 'candidates', component: () => import('pages/admin/Candidates.vue') },
-      { path: 'employees', component: () => import('pages/admin/Employees.vue') },
+      { path: 'licencas', component: () => import('pages/admin/license.vue') },
 
-      { path: 'vacancies', component: () => import('pages/admin/Vacancies.vue') },
-      { path: 'vacancy/:id', component: () => import('pages/admin/VacancyDetails.vue') },
+     
       { path: 'users', component: () => import('pages/admin/Users.vue') },
       { path: 'nopermission', component: () => import('pages/admin/NoPermission.vue') },
-      { path: 'cursos', component: () => import('pages/admin/Courses.vue') },
+      { path: 'relatorios', component: () => import('pages/admin/Reports.vue') },
 
 
     ],

@@ -76,13 +76,13 @@
           <q-input
             filled
             v-model="saveObject.address"
-            label="Endereço *"
+            label="Firma / Local de trabalho *"
             lazy-rules
             :rules="[val => (val && val.length > 0) || 'Preencha este campo']"
           />
           <div class = 'row'> 
               <q-btn
-              label="Registar"
+             :label="selectedId ? 'Actualizar' : 'Registar'"
               type="submit"
               color="primary"
               unelevated

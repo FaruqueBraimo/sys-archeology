@@ -4,7 +4,7 @@ import Vuex from "vuex";
 import auth from "./modules/auth";
 import candidate from "./modules/candidates";
 import employee from "./modules/employees";
-import vacancy from "./modules/vacancies";
+import license from "./modules/licenses";
 import settings from './modules/settings'
 
 import course from "./modules/courses";
@@ -22,7 +22,7 @@ export default function(/* { ssrContext } */) {
       auth,
       candidate,
       employee,
-      vacancy,
+      license,
       settings,
       course
     },
