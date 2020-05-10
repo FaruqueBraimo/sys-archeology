@@ -1,0 +1,94 @@
+<template>
+  <div class="q-pa-md">
+    <q-card class="my-card">
+      <q-card-section>
+        <div class="text-h6">Cursos disponiveis</div>
+      </q-card-section >
+
+    <div class="row justify-center" > 
+      <q-tabs v-model="tab" class="text-teal row inline  " 
+
+              v-for="(area, id) in areas" :key="id"  >
+              
+              <q-tab :label="area.title" :name="area.title"   />
+      
+      </q-tabs>
+     
+</div>
+      <q-separator />
+ <div class=" row relative-position	">
+      <div class=" col-xs-12 col-md-3 q-pa-md   "      >
+
+        <tamplate   v-for="(course, id) in courses" :key="id" >
+      
+      <q-tab-panels v-model="tab" animated  v-for="(area, idArea) in areas" :key="idArea" >
+  
+        <q-tab-panel :name="area.title" v-if="idArea==course.areaId" class="" >        
+
+   <!-- TODO : Melhorar a implementacao da lista de cursos , dividindo em componentes ( by Faruque Braimo) -->
+      
+
+ 
+        <q-card class="my-card"  @click="$router.push('/course/' +  id)" >
+      <img src="https://cdn.quasar.dev/img/mountains.jpg">
+      <q-card-section>
+        <div class="text-h6">{{ course.name }}  </div>
+        <div class="text-subtitle3">{{ course.paymentType }}</div>
+        <q-rating size="24px" v-model="stars" :max="5" />
+          <div class=" row text-subtitle1 "> 
+           <div class="col-6 justify-left">
+             {{ course.price }}.00 MT
+            </div>
+              </div>
+      </q-card-section>
+    </q-card>
+
+
+
+        </q-tab-panel>
+        
+      </q-tab-panels>
+
+         </tamplate> 
+            </div>
+  </div>
+
+    </q-card>
+    
+  </div>
+</template>
+
+
+<script>
+import CoursesData from  "components/courses/CoursesData.vue"
+import { mapActions, mapState, mapGetters } from 'vuex'
+
+
+export default {
+   components: {
+    
+     CoursesData
+ }
+ ,
+  data () {
+    return {
+      stars: 4,
+        tab: ''
+
+    }
+  },
+    computed: {
+        ...mapState ('course', [
+            'courses'
+        ]),
+           ...mapState('area', ['areas']),
+          } ,
+
+          mounted(){
+
+                this.tab = 'Contabilidade';
+            
+          }
+}
+</script>
+

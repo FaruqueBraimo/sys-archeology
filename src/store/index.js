@@ -1,29 +1,36 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-// import example from './module-example'
+import auth from "./modules/auth";
+import candidate from "./modules/candidates";
+import employee from "./modules/employees";
+import vacancy from "./modules/vacancies";
+import settings from './modules/settings'
 
-Vue.use(Vuex)
+import course from "./modules/courses";
+
+Vue.use(Vuex);
 
 /*
  * If not building with SSR mode, you can
- * directly export the Store instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Store instance.
+ * directly export the Store instantiation
  */
 
-export default function (/* { ssrContext } */) {
+export default function(/* { ssrContext } */) {
   const Store = new Vuex.Store({
     modules: {
-      // example
+      auth,
+      candidate,
+      employee,
+      vacancy,
+      settings,
+      course
     },
 
     // enable strict mode (adds overhead!)
     // for dev mode only
     strict: process.env.DEV
-  })
+  });
 
-  return Store
+  return Store;
 }
