@@ -1,12 +1,13 @@
 <template>
-    <div class="col-xs-12 col-sm-6 col-md-3 q-py-xs-sm q-pa-sm-md">
-        <q-card class="my-card">
+    <div class="col-12  col-md-4  ">
+        <q-card class="my-card text-center  ">
 
             <q-btn
-                color="white"
+                color=""
                 flat
                 icon="more_horiz"
                 class="absolute-top-right"
+             
             >
                 <q-menu>
                     <q-list style="">
@@ -21,14 +22,11 @@
                     </q-list>
                 </q-menu>
             </q-btn>
+                <q-avatar color="primary" text-color="white"  icon="bar_chart"></q-avatar>
 
 
-            <img
-               
-                src ='statics/licensa.png'
 
-            >
-
+          
             <div style="">
                 <q-card-section>
                     <div class="text-h6 text-primary">Licenca vitalicia</div>
