@@ -1,56 +1,52 @@
 <template>
     <tr>
         <td class="text-left">
-            <q-avatar @click="$emit('changePhoto', candidate)" color="red" text-color="white">
+            <!-- <q-avatar @click="$emit('changePhoto', candidate)" color="red" text-color="white">
                 <q-img :src="getSmallImage(candidateImage(candidate))" spinner-color="white" />
-            </q-avatar>
-            {{ candidate.name }} - {{ candidate.aprovedAt }}
+            </q-avatar> -->
+            {{ candidate.name }}
         </td>
-        <td class="text-right">{{ candidate.contact }}</td>
-        <td class="text-right">{{ candidate.birthDate }}</td>
-        <td class="text-right">{{ candidate.bairro }}</td>
-        <td class="text-right q-gutter-md">
-            <q-btn-dropdown
-                icon="picture_as_pdf"
-                color="white"
-                text-color="black"
-                label="Curriculo"
-                v-if="candidate.cvUrl"
-            >
-                <q-list>
-                    <q-item
-                        clickable
-                        v-close-popup
-                    >
-                        <q-item-section>
-                            <a class="external-link" :href="candidate.cvUrl" target="_blank">Ver Curriculo</a>
-                        </q-item-section>
-                        <q-item-section side>
-                            <q-icon name="attachment" />
-                        </q-item-section>
-                    </q-item>
+        <td class="text-left">{{ candidate.contact }}</td>
+        <td class="text-left">{{ candidate.country }}</td>
+        <td class="text-left">{{ candidate.email }}</td>
+         <td class="text-left">{{ candidate.address }}</td>
 
-                    <q-item clickable v-close-popup @click="$emit('uploadCV', candidate)">
-                        <q-item-section>
-                            <q-item-label>Carregar</q-item-label>
-                        </q-item-section>
-                        <q-item-section side>
-                            <q-icon name="cloud_upload" />
-                        </q-item-section>
-                    </q-item>
-
-                </q-list>
-            </q-btn-dropdown>
+        <td class="text-center ">
+           
 
             <q-btn
-                v-else
+               
                 color="white"
                 text-color="black"
-                icon="picture_as_pdf"
-                label="Curriculo"
-                @click="$emit('uploadCV', candidate)"
+                icon="receipt"
+                label="Licenças"
+                size="sm"
 
-            />
+
+            >
+
+             
+              <q-tooltip content-class="bg-indigo" :offset="[10, 10]">
+                Ver Licenças dadas ao arqueologo
+              </q-tooltip>
+            </q-btn>
+
+              <q-btn
+                color="white"
+                text-color="amber"
+                flat
+                round
+                icon="info"
+                @click="$emit('editCandidate', candidate)"
+            > 
+
+             
+              <q-tooltip   content-class="bg-amber text-black shadow-4"
+             :offset="[10, 10]">
+                Ver detalhes do arqueologo
+              </q-tooltip>
+            </q-btn>  
+            
 
             <q-btn
                 color="white"
@@ -61,7 +57,7 @@
                 @click="$emit('editCandidate', candidate)"
             >
               <q-tooltip content-class="bg-indigo" :offset="[10, 10]">
-                Editar candidato
+                Editar dados do arqueologo
               </q-tooltip>
             </q-btn>
 
@@ -75,7 +71,7 @@
             >
 
               <q-tooltip content-class="bg-red" :offset="[10, 10]">
-                Remover candidato
+                Remover dados do arqueologo
               </q-tooltip>
             </q-btn>
 
@@ -130,7 +126,7 @@
           },
         computed: {
             ...mapGetters('candidate', [
-                'positionNames', 'candidateImage'
+                'positionNames', ''
             ]),
             ...mapGetters('auth', [
                 'getSmallImage'

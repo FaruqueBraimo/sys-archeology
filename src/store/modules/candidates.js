@@ -107,49 +107,7 @@ const actions = {
 
     },
 
-    filteredForInterview ({ state, commit, dispatch }, condition = null) {
-
-        let totalRetrived = Object.keys(state.candidatesForPosition).length
-        let lastId = Object.keys(state.candidatesForPosition)[totalRetrived -1] //Last item id
-        let lastCandidate = state.candidatesForPosition[lastId] //getting candidate by Id
-
-        let totalToGet = totalRetrived > 0 ? totalRetrived : 10
-        let query = {}
-
-        commit('loading', true)
-        // commit('resetCandidatesForPosition')
-
-        // dbCandidates.where("professions", "array-contains", profissionId)
-
-        if (condition === 'getNext10') {
-            totalToGet += 10
-            query = dbCandidates.where("aprovedAt", "==", "").orderBy("createdAt", "desc").startAt(lastCandidate).limit(totalToGet)
-        }
-        if (!condition) {
-            query = dbCandidates.where("aprovedAt", "==", "").orderBy("createdAt", "desc").limit(15)
-        }
-
-
-        query.onSnapshot(function (snapshot) {
-
-                commit('loading', false)
-
-                snapshot.docChanges().forEach(function (change) {
-
-                    commit('addCandidatesForPosition',{
-                        id: change.doc.id,
-                        object: change.doc.data()
-                    })
-
-
-                })
-            })
-
-    },
-
-    resetCandidatesForPosition ({ commit }) {
-        commit('resetCandidatesForPosition')
-    },
+    
 
     listenColaboratorsOnGenericConditition ({ dispatch }, condition = null) {
         let totalRetrived = Object.keys(state.candidates).length
@@ -161,10 +119,10 @@ const actions = {
 
         if (condition === 'getNext10') {
             totalToGet += 10
-            query = dbCandidates.where("aprovedAt", ">", new Date(2000, 2,2)).orderBy("aprovedAt", "desc").orderBy("createdAt", "desc").startAt(lastCandidate).limit(totalToGet)
+            query = dbCandidates.orderBy("createdAt", "desc").startAt(lastCandidate).limit(totalToGet)
         }
         if (!condition) {
-            query = dbCandidates.where("aprovedAt", ">", new Date(2000, 2,2)).orderBy("aprovedAt", "desc").orderBy("createdAt", "desc").limit(totalToGet)
+            query = dbCandidates.orderBy("createdAt", "desc").limit(totalToGet)
         }
 
 
@@ -172,11 +130,11 @@ const actions = {
 
     },
 
-    listenCandidateRealTimeChanges ({state, commit}, query) {
+    listenCandidateRealTimeChanges ({state, commit}) {
 
-        commit('loading', true)
+        // commit('loading', true)
 
-        query.onSnapshot(function(snapshot) {
+        dbCandidates.onSnapshot(function(snapshot) {
 
             snapshot.docChanges().forEach(function(change) {
 

@@ -148,7 +148,7 @@ export default {
       ]),
 
       updatePageTitle () {
-          this.setActualPageTitle('Candidatos (' + Object.keys(this.candidates).length + ')')
+          this.setActualPageTitle('Arqueologos (' + Object.keys(this.candidates).length + ')')
       },
       closeDialog () {
           this.dialogCandidate = false

@@ -19,7 +19,7 @@
               'listenUsersRealTimeChanges',
           ]),
 
-            ...mapActions('auth', [
+            ...mapActions('candidate', [
               'listenCandidateRealTimeChanges',
           ]),
 

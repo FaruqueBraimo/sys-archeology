@@ -6,7 +6,7 @@
         <th class="text-left bg-primary ">Nacionalidade</th>
         <th class="text-left bg-primary">Email</th>
         <th class="text-left bg-primary ">Endereço</th>
-        <th  class="text-left bg-primary ">Ação</th>
+        <th  class="text-center bg-primary ">Ação</th>
     </tr>
     </thead>
 </template>
