@@ -183,7 +183,9 @@ export default {
   props: ["dialogCandidate", "editObjectCandidate"],
   data() {
     return {
-      saveObject: {},
+      saveObject: {
+        arqValue : ''
+      },
       model: [],
       arrs: [],
       provinces: [
@@ -273,6 +275,7 @@ export default {
     onSubmit() {
       if (this.selectedId) {
         delete this.saveObject.id; //deletando Id
+        this.saveObject.arqValue = this.saveObject.arqId.value
         this.updatelicense({
           id: this.selectedId,
           updates: this.saveObject

@@ -6,8 +6,8 @@ import candidate from "./modules/candidates";
 import employee from "./modules/employees";
 import license from "./modules/licenses";
 import settings from './modules/settings'
+import report from './modules/reports'
 
-import course from "./modules/courses";
 
 Vue.use(Vuex);
 
@@ -24,7 +24,7 @@ export default function(/* { ssrContext } */) {
       employee,
       license,
       settings,
-      course
+      report
     },
 
     // enable strict mode (adds overhead!)

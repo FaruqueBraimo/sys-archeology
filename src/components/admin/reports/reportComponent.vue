@@ -10,6 +10,7 @@
              
             >
                 <q-menu>
+
                     <q-list style="">
                         <!--TODO: implementar a actualização de vagas-->
                         <q-item clickable v-close-popup>
@@ -62,12 +63,11 @@
 <script>
     import { mapActions, mapState, mapGetters } from 'vuex'
     import { date } from 'quasar'
-   import VacancyDetails from "pages/admin/VacancyDetails";
 
     export default {
         name: "VacancyComponent",
         props: ['vacancy', 'id'],
-        components: { VacancyDetails},
+        components: { },
 
       data () {
       return {

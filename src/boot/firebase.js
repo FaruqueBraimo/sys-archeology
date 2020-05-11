@@ -30,7 +30,7 @@ export const dbCandidates = db.collection("arqueologs");
 
 export const dblicenses = db.collection("licenses");
 
-export const dbCustomers = db.collection("customers");
+export const dbReports = db.collection("reports");
 
 
 
