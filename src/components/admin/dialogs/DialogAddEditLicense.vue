@@ -39,20 +39,17 @@
                 filled
                 :options="site"
                  v-model="saveObject.nameSite"
-                label="Nome do Sitio *"
+                label="Tipo da estação arqueologico *"
               />
             </div>
             <div class="col-6 q-pl-md">
-              <q-input
-                filled
-                v-model="saveObject.longitude"
-                label="Longitude do Sitio *"
-                lazy-rules
-                type="number"
-                :rules="[
-                  val => (val && val.length > 0) || 'Preencha este campo'
-                ]"
-              />
+               <q-input
+            filled
+            v-model="saveObject.typeStation"
+            label="Nome do sitio  *"
+            lazy-rules
+            :rules="[val => (val && val.length > 0) || 'Preencha este campo']"
+          />
             </div>
           </div>
 
@@ -60,10 +57,10 @@
             <div class="col-6">
               <q-input
                 filled
-                v-model="saveObject.latitude"
+                v-model="saveObject.coord"
                 class="col-xs-6"
-                label="Latitude *"
-                type="number"
+                label="Coordernadas Geograficas *"
+               
                 lazy-rules
                 :rules="[
                   val => (val && val.length > 0) || 'Preencha este campo'
@@ -148,7 +145,7 @@
                 filled
                 v-model="saveObject.patrimony"
                 :options="patrimony"
-                label="Patrimonio Cultural"
+                label="Património Cultural Imóvel "
               />
             </div>
           </div>
@@ -221,7 +218,7 @@ export default {
         "Pinturas Rupestres da idade Média",
         "Pinturas Rupestres da idade Superior"
       ],
-      patrimony : ['Conservação','Restauro', 'Reablitação','Gestão' ,'Reformação', 'Manutenção'],
+      patrimony : ['Conservação','Restauro', 'Reablitação','Gestão' ,'Reparação', 'Manutenção'],
      site : ['Terreste','Subaquatico', 'Gruta-Caverna']
 
     };

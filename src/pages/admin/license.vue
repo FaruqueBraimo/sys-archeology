@@ -67,7 +67,6 @@
 
     
 
-    <global-confirm-dialog :confirm="confirm" @closeDialog="confirm = true" />
 
   </q-page>
 </template>
@@ -76,7 +75,6 @@
   import { mapActions, mapState, mapGetters } from 'vuex'
 // import pdf from 'vue-pdf'
   import SearchAndAddComponent from "../../components/admin/SearchAndAddComponent";
-  import GlobalConfirmDialog from "../../components/admin/dialogs/GlobalConfirmDialog";
   import DialogAddEditlicense from "../../components/admin/dialogs/DialogAddEditlicense";
   import  licensesTableHeaderComponent from "../../components/admin/licenses/licensesTableHeaderComponent";
   import  licensesTableRowComponent from "../../components/admin/licenses/licensesTableRowComponent";
@@ -191,7 +189,7 @@ export default {
   },
   components: {
       
-    GlobalConfirmDialog,
+    
     licensesTableRowComponent,
     licensesTableHeaderComponent,
     DialogAddEditlicense,

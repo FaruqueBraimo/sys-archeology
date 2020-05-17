@@ -2,7 +2,9 @@
     <div class="" :class="object.style ? object.style : 'col-12'">
         <q-input
             bottom-slots
-            outlined
+            outlined 
+            filled
+            rounded
             v-model="searchText"
         >
             <template v-slot:prepend>

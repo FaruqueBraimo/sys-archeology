@@ -67,7 +67,6 @@
 
     
    
-    <global-confirm-dialog :confirm="confirm" @closeDialog="confirm = true" />
 
   </q-page>
 </template>
@@ -76,7 +75,6 @@
   import { mapActions, mapState, mapGetters } from 'vuex'
 // import pdf from 'vue-pdf'
   import SearchAndAddComponent from "../../components/admin/SearchAndAddComponent";
-  import GlobalConfirmDialog from "../../components/admin/dialogs/GlobalConfirmDialog";
   import DialogAddEditCandidate from "../../components/admin/dialogs/DialogAddEditCandidate";
   import CandidatesTableHeaderComponent from "../../components/admin/candidates/CandidatesTableHeaderComponent";
   import CandidatesTableRowComponent from "../../components/admin/candidates/CandidatesTableRowComponent";
@@ -191,7 +189,7 @@ export default {
   },
   components: {
     
-    GlobalConfirmDialog,
+    
     CandidatesTableRowComponent,
     CandidatesTableHeaderComponent,
     DialogAddEditCandidate,

@@ -10,12 +10,7 @@
         </search-and-add-component>
 
     <reportComponent v-for="i in 20" :key="i" class="q-pa-lg" />
-    <!-- <DialogAddEditReport
-    
-      :dialogVocancy=true
-        @closeDialog="closeDialog"
-        :editObjectVacancy="editObjectVacancy"
-    /> -->
+   
 
     <q-page-sticky position="bottom-right" :offtset="[17, 17]">
       <q-btn

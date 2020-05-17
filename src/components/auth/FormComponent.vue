@@ -58,12 +58,12 @@
                 <!--<q-btn label="Reset" type="reset" color="primary" flat class="q-ml-sm" />-->
             </div>
 
-           <span v-if="name === 'Login'"> Não tem conta? </span>
+           <!-- <span v-if="name === 'Login'"> Não tem conta? </span>
             <span v-else>  Tem conta? </span>
 
            
              <q-btn v-if="name === 'Login'" to="/register" color="primary" no-caps  flat label=" Cria aqui conta" />
-            <q-btn v-else to="/" no-caps flat label=" Faça login" color="primary"/>
+            <q-btn v-else to="/" no-caps flat label=" Faça login" color="primary"/> -->
 
 
         </div>

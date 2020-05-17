@@ -1,140 +1,125 @@
 <template>
   <q-page padding>
-    <div v-if="getTotal(todayInterviews) > 0">
-      <q-banner class="bg-green-2 q-mt-xs">
-        <template v-slot:avatar>
-          <q-icon name="mic" color="green" />
-        </template>
-          Atenção que hoje tens: {{ getTotal(todayInterviews) }} entrevista{{ getTotal(todayInterviews) > 1 ? 's' : '' }} agenda{{ getTotal(todayInterviews) > 1 ? 's' : '' }}.
-        <template v-slot:action>
-          <q-btn
-            flat
-            color="primary"
-            label="Ver entrevista(s)"
-            no-caps
-            @click="showInterviews (todayFormated)"
-          />
-          <q-btn
-                flat
-                color="primary"
-                label="Marcar entrevista"
-                no-caps
-                to="/admin/interviews"
-          />
-        </template>
-      </q-banner>
+    <div class="row inline q-pa-md">
+      <div class="col q-pr-md">
+        <q-card class="my-card text-white" style="  background-image: linear-gradient(#1488CC, #2B32B2);
+">
+          <q-card-section>
+            <div class="text-h5" v-if="Object.keys(candidates).length>0">{{Object.keys(candidates).length}}</div>
+              <q-skeleton type="QRadio"  v-else  class="bg-warning" />
+            <div class="text-subtitle2">Arquologos</div>
+          </q-card-section>
+          <q-card-section>
+            Numero total de arqueologos registados no sistema
+              <q-linear-progress indeterminate color="warning" class="q-mt-sm" />
+          </q-card-section>
+        </q-card>
+      </div>
+      <div class="col q-pr-md">
+        <q-card class="my-card text-white" style="  background-image: linear-gradient(#0F2027, #203A43,#2c5364);
+">
+          <q-card-section>
+            <div class="text-h5" v-if="Object.keys(licenses).length>0">{{Object.keys(licenses).length}} </div>
+               <q-skeleton type="QRadio"  v-else  class="bg-red-5"  />
+            <div class="text-subtitle2">Licenças</div>
+          </q-card-section>
+          <q-card-section>
+            Numero total de Licenças atibuidas aos arqueologos
+              <q-linear-progress indeterminate color="red-5" class="q-mt-sm" />
+          </q-card-section>
+        </q-card>
+      </div>
 
+      <div class="col q-pr-md" >
+        <q-card class="my-card text-white" style="  background-image: linear-gradient(#FF416C, #FF4B2B);
+">  
+          <q-card-section>
+            <div class="text-h5" >444</div>
+            <div class="text-subtitle2">Relatorios</div>
+          </q-card-section>
+          <q-card-section>
+            Numero total de Relatorios submetidos pelos arqueologos
+              <q-linear-progress indeterminate color="primary" class="q-mt-sm" />
+          </q-card-section>
+        </q-card>
+      </div>
+
+      <div class="col">
+        <q-card class="my-card text-white" style="  background-image: linear-gradient(#b92b27, #1565C0);
+">
+          <q-card-section>
+            <div class="text-h5" v-if="Object.keys(users).length>0" >{{Object.keys(users).length}}</div>
+               <q-skeleton type="QRadio"  v-else  class="bg-green"   />
+            <div class="text-subtitle2">Usuarios</div>
+          </q-card-section>
+          <q-card-section>
+                      Numero total de Utilizadores activos no sistemas
+                        <q-linear-progress indeterminate color="green" class="q-mt-sm" />
+
+          </q-card-section>
+        </q-card>
+      </div>
     </div>
-    <div v-else>
-      <q-banner class="bg-green-2 q-mt-xs">
-        <template v-slot:avatar>
-          <q-icon name="mic_off" color="primary" />
-        </template>
-        Sem  entrevistas para hoje!
-        <template v-slot:action>
-          <q-btn
-                  flat
-                  color="primary"
-                  label="Marcar entrevista"
-                  to="/admin/interviews"
-          />
-        </template>
-      </q-banner>
 
+  <div class=" text-bold text-h5 text-center q-pt-xl"> 
+      Em breve aqui vai nascer um gráfico lindo, sozinho! 
+    </div>
+
+      
+      
     </div>
   </q-page>
 </template>
 
 <script>
-  import { mapActions, mapState } from 'vuex'
-  import { date } from 'quasar'
-  export default {
+import { mapActions, mapState } from "vuex";
+import lineChart from "../../components/admin/dialogs/line-chart";
 
-    mounted () {
-        this.setActualPageTitle('Página Inicial')
+import { date } from "quasar";
 
-        if (!this.users) {
-            this.$router.push('/')
+export default {
+ components: {   lineChart
+  },
+  data () {
+    return {
+      chartData: {
+      labels: ['January', 'February'],
+      datasets: [
+        {
+          label: 'Data One',
+          backgroundColor: '#f87979',
+          data: [40, 20]
         }
-        let user = this.users[this.userAuth.uid]
-
-        //Redireciona o user para outra página, caso o user não seja Administrador nem Editor
-
-      
-
-
+      ]
     },
-      computed: {
-          ...mapState('settings', ['globalConfigs']),
-          ...mapState('auth', ['users', 'userAuth']),
-          todayInterviews () {
-              return this.groupByDates[this.todayFormated] && this.groupByDates[this.todayFormated].interviews ?
-                  this.groupByDates[this.todayFormated].interviews : {}
-          },
-          todayFormated () {
-              return date.formatDate(new Date(), 'YYYY/MM/DD')
-          },
-          user () {
-              return this.users[this.userAuth.uid]
-          },
-          isAdmin () {
-              return this.users && this.userAuth.uid && this.user && this.user.role === 'Administrador'
-          },
-          groupByDates (interviews) {
-              let grouped = {}
-              Object.keys(this.interviews).forEach(id => {
+    options: {
+      responsive: true,
+      maintainAspectRatio: false
+    }
+    }
+  },
+  mounted() {
+    this.setActualPageTitle("Página Inicial");
 
-                  let date = this.interviews[id].date
-                  let interview = this.interviews[id]
-                  let intes = {}
+    if (!this.users) {
+      this.$router.push("/");
+    }
+    let user = this.users[this.userAuth.uid];
 
-                  // Validar se posso saber dessas entrevistas.
-                  if (this.canISeeThisInterview(interview)) {
-
-                      if (grouped[date] && grouped[date].date) { // Outra entrevista na mesma data encontrada.
-
-                          intes = grouped[date].interviews //recuperando as outras entrevistas nesta data
-                          intes[id] = this.interviews[id] //adicionando a nova entrevista
-
-                      } else {
-
-                          intes[id] = this.interviews[id]
-
-                      }
-
-                      grouped[date] = {
-                          date: date,
-                          interviews: intes,
-                      }
-
-                  }
-
-              })
-              return grouped
-          },
-      },
-    methods: {
-        ...mapActions('settings', [
-            'setActualPageTitle', 'setGlobalConfigs'
-        ]),
-        getTotal (interviews) {
-            return Object.keys(interviews).length
-        },
-        canISeeThisInterview (interview) {
-            return (interview.createdBy && interview.createdBy === this.userAuth.uid) || this.isAdmin
-        },
-        showInterviews (date) {
-
-            let objectCopy = Object.assign({},this.globalConfigs)
-
-            objectCopy.interviewsDate = date
-
-            this.setGlobalConfigs(objectCopy)
+    //Redireciona o user para outra página, caso o user não seja Administrador nem Editor
+  },
+  computed: {
+    ...mapState("settings", ["globalConfigs"]),
+    ...mapState("auth", ["users", "userAuth"]),
+    ...mapState("candidate", ["candidates", ]),
+    ...mapState("license", ["licenses", ])
 
 
-            this.$router.push('/admin/interviews/')
-        }
-    },
 
-  }
+  },
+   methods: {
+      ...mapActions('settings', [
+          'setActualPageTitle'
+      ]),}
+};
 </script>

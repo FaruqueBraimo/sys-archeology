@@ -6,7 +6,7 @@ const routes = [
     component: () => import('layouts/AdminBaseLayout.vue'),
     children: [
       { path: '', component: () => import('pages/admin/Index.vue') },
-      { path: 'candidates', component: () => import('pages/admin/Candidates.vue') },
+      { path: 'archeologic', component: () => import('pages/admin/Archeologic.vue') },
       { path: 'licencas', component: () => import('pages/admin/license.vue') },
 
      

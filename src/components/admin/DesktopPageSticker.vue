@@ -17,7 +17,7 @@
 
             <template >
 
-                <q-btn round flat :color="btnColor('candidates')" stack no-caps size="26px" class="GPL__side-btn" to="/admin/candidates">
+                <q-btn round flat :color="btnColor('archeologic')" stack no-caps size="26px" class="GPL__side-btn" to="/admin/archeologic">
                     <q-icon size="22px" name="group" />
                     <div class="GPL__side-btn__label">Arqueologos</div>
                 </q-btn>

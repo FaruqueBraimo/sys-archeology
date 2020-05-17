@@ -50,7 +50,36 @@
               />
             </div>
             <div class="col-6 q-pl-md">
+               <div class="col-6">
               <q-input
+                filled
+                v-model="saveObject.fax"
+                class="col-xs-6"
+                label="Fax *"
+                type="number"
+                
+              />
+             
+            </div>
+          </div>
+          </div>
+
+
+
+           <div class="row">
+            <div class="col-6">
+               <q-input
+            filled
+            v-model="saveObject.email"
+            label="Email *"
+            lazy-rules
+            type="email"
+            :rules="[val => (val && val.length > 0) || 'Preencha este campo']"
+          />
+            </div>
+            <div class="col-6 q-pl-md">
+               <div class="col-6">
+            <q-input
                 filled
                 v-model="saveObject.birthDate"
                 label="Data de nascimento *"
@@ -61,17 +90,13 @@
                   val => (val && val.length > 0) || 'Preencha este campo'
                 ]"
               />
+             
             </div>
           </div>
+          </div>
 
-          <q-input
-            filled
-            v-model="saveObject.email"
-            label="Email *"
-            lazy-rules
-            type="email"
-            :rules="[val => (val && val.length > 0) || 'Preencha este campo']"
-          />
+        
+           
 
           <q-input
             filled

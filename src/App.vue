@@ -31,7 +31,7 @@
   export default {
     name: 'App',
     created () {
-        this.handleAuthStateChange ()
+        this.listenUsersRealTimeChanges ()
         this.listenCandidateRealTimeChanges()
         this.listenlicenseRealTimeChanges()
         this.listenreportRealTimeChanges()

@@ -1,5 +1,6 @@
-<template>
-    <div class="row">
+<template >
+        <q-page  class="bg-primary" >
+             <div class="row ">
         <div class="col-xs-12 col-sm-6 col-md-4 offset-sm-3 offset-sm-4">
             <q-card
                 class="q-mt-xl"
@@ -21,6 +22,8 @@
             </q-card>
         </div>
     </div>
+        </q-page>
+   
 </template>
 
 <script>

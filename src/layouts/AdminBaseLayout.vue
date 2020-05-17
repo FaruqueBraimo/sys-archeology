@@ -20,7 +20,7 @@
         </q-toolbar-title>
 
         <div> 
-        <q-card class="my-card text-center" flat>
+        <q-card class="my-card text-center q-ml-xl" flat>
           <q-card-section>
              <q-avatar size="70px"> 
             <img src='statics/logo.jpg' />

@@ -82,7 +82,6 @@
   import DialogAddEditCandidate from "../../components/admin/dialogs/DialogAddEditCandidate";
   import UserTableRowComponent from "../../components/admin/users/UserTableRowComponent";
   import UserTableHeadComponent from "../../components/admin/users/UserTableHeadComponent";
-  import GlobalConfirmDialog from "../../components/admin/dialogs/GlobalConfirmDialog";
 
 export default {
   // name: 'PageName',
@@ -112,7 +111,7 @@ export default {
       ]),
   },
   components: {
-      GlobalConfirmDialog,
+      
       UserTableHeadComponent,
       UserTableRowComponent,
       DialogAddEditCandidate,
