@@ -34,9 +34,9 @@
                     <div class="GPL__side-btn__label">Relatorios</div>
                 </q-btn>
 
-                 <q-btn round flat :color="btnColor('interviews')" stack no-caps size="26px" class="GPL__side-btn" to="/admin/interviews">
+                 <q-btn round flat :color="btnColor('users')" stack no-caps size="26px" class="GPL__side-btn" to="/admin/users">
                     <q-icon size="22px" name="account_circle" />
-                    <div class="GPL__side-btn__label">Minha Conta</div>
+                    <div class="GPL__side-btn__label">Funcionarios</div>
                 </q-btn>
 
             </template>
