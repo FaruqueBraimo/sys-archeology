@@ -1,15 +1,15 @@
 <template>
   <q-page padding class="flex justify-left q-pt-xl  q-pl-xl">
-      <search-and-add-component
-            @showDialog="dialogVocancy = true"
-            :object="{
-              canShowAddBtn: true,
-              type: 'vacancy'
-            }"
-    >
-        </search-and-add-component>
+     
+    <DialogAddEditReport
+        :dialogReport="dialogReport"
+        :editObjectReport="editObjectReport"
+        @closeDialog="closeDialog()"
+    
+    />
+    {{reports}}
 
-    <reportComponent v-for="i in 20" :key="i" class="q-pa-lg" />
+    <report-arq v-for="i in reports" :repo = i :key="i" class="q-pa-md" />
    
 
     <q-page-sticky position="bottom-right" :offtset="[17, 17]">
@@ -20,6 +20,7 @@
         fab
         icon="add"
         color="primary"
+        @click="dialogReport=true"
       />
     </q-page-sticky>
   </q-page>
@@ -27,12 +28,27 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import reportComponent from "../../components/admin/reports/reportComponent";
+import reportArq from "../../components/admin/reports/reportArq";
 import DialogAddEditReport from "../../components/admin/dialogs/DialogAddEditReport";
 
 export default {
   components: {
-    reportComponent,DialogAddEditReport
+    reportArq, DialogAddEditReport
+    
+  },
+    computed: {
+        ...mapState ('report', [
+            'reports', 
+        ]),
+       
+       
+    },
+
+  data() {
+    return {
+      dialogReport : false,
+      editObjectReport: false
+    }
   },
   mounted() {
     this.setActualPageTitle("Relatorios dos Arqueologos");
@@ -41,6 +57,11 @@ export default {
     ...mapActions("settings", ["setActualPageTitle"]),
 
     ...mapActions("request", ["deleteSubscriber"]),
+      closeDialog () {
+          this.dialogReport = false
+          this.editObjectReport = null
+      },
+
     remove(id) {
       this.$q
         .dialog({
@@ -56,12 +77,7 @@ export default {
         .onOk(() => {
           // console.log('>>>> second OK catcher')
         })
-        .onCancel(() => {
-          // console.log('>>>> Cancel')
-        })
-        .onDismiss(() => {
-          // console.log('I am triggered on both OK and Cancel')
-        });
+    
     }
   }
 };

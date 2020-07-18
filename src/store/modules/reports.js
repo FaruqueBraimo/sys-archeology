@@ -10,7 +10,7 @@ const state = {
     reportsForPosition: {},
     loading: false,
     uploadProgress: -1,
-    reportsearchKey:  ''
+    file:  ''
 
 }
 
@@ -19,13 +19,16 @@ const mutations = {
     addreport (state, payload) {
        Vue.set(state.reports, payload.id, payload.object)
     },
-    addreportsForPosition (state, payload) {
+    addFile(state, payload) {
+        state.file = payload
+    },
+     addreportsForPosition (state, payload) {
        Vue.set(state.reportsForPosition, payload.id, payload.object)
     },
     resetreportsForPosition (state) {
         state.reportsForPosition = {}
     },
-    updatereport (state, payload) {
+    updateReport (state, payload) {
         Object.assign(state.reports[payload.id], payload.updates)
     },
     deletereport (state, id) {
@@ -130,7 +133,7 @@ const actions = {
 
     },
 
-    listenreportRealTimeChanges ({state, commit}) {
+    listenreportRealTimeChanges ({dispatch , state, commit}) {
 
         // commit('loading', true)
 
@@ -146,13 +149,19 @@ const actions = {
                         object: change.doc.data()
                     })
 
+                    let saveObject = { id :  change.doc.id, file:  state.file
+                    
+                    }
+                    
+
+
                     if (snapshot.docChanges().length === 1) {
                         // showSuccessMessage('Candidato adicionado com sucesso!')
                     }
 
                 }
                 if (change.type === "modified") {
-                    commit('updatereport', {
+                    commit('updateReport', {
                         id: change.doc.id,
                         updates: change.doc.data()
                     })
@@ -166,8 +175,10 @@ const actions = {
         });
     },
 
-    addreport ({commit}, payload) {
-
+    addReport ({commit, dispatch}, payload2) {
+        let payload = {}
+          payload.arqId =  payload2.arqId
+          payload.description =  payload2.description
         commit('loading', true)
         payload.createdAt = new Date();
         payload.updatedAt = new Date();
@@ -175,7 +186,10 @@ const actions = {
         dbReports.add(payload)
             .then(function(docRef) {
                 commit('loading', false)
+                payload2.id = docRef.id
+                dispatch('storeReportPdf',payload2)
                 showSuccessMessage('Relátorio adicionada com sucesso!')
+
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
@@ -184,14 +198,11 @@ const actions = {
             });
     },
 
-    updatereport ({commit}, payload) {
+    updateReport ({commit}, payload) {
 
-        commit('loading', true)
-        payload.updates.updatedAt = new Date();
         dbReports.doc(payload.id).update(payload.updates)
             .then(function(docRef) {
-                commit('loading', false)
-                showSuccessMessage(payload.sucessMessage ? payload.sucessMessage : 'Relátorio actualizada com sucesso!')
+                showSuccessMessage( 'Relátorio actualizada com sucesso!')
             })
             .catch(function(error) {
                 console.error("Error adding document: ", error);
@@ -221,45 +232,33 @@ const actions = {
     setreportsearchKey ({commit}, text) {
         commit('setreportsearchKey', text)
     },
-    storereportPhoto ({state, commit, dispatch}, saveObject) {
 
-        commit('uploadProgress', -1)
-
-        let imageName = saveObject.id + '.' + saveObject.file.name.split('.')[1]
-
-        showLoading({ //inicializando o processamento
-            message: saveObject.progressMessage ? saveObject.progressMessage : 'Gravando imagem do candidato <b>0%</b>',
-        })
-
-        let uploadTask = storageRef.child('reportsImages/' + imageName).put(saveObject.file);
-
+    storeReportPdf ({state, commit, dispatch}, saveObject) {
+    
+        let fileName = saveObject.id + '.' + saveObject.file.name.split('.')[1]
+          let progress2
+       
+    
+        let uploadTask = storageRef.child('reports/'+ fileName).put(saveObject.file) 
+       
+        ;
+    
         uploadTask.on('state_changed', function(snapshot){
-
-            let progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            commit('uploadProgress', progress)
-
-            showLoading({ //inicializando o processamento
-                message: saveObject.progressMessage ? saveObject.progressMessage : 'Gravando imagem do candidato <b>0%</b>',
-            })
-
+            
+    
         }, function(error) {
-            // Handle unsuccessful uploads
-            showLoading(null) //encerrando o processamento
+
         }, function() {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+
+           
             uploadTask.snapshot.ref.getDownloadURL().then(function(downloadURL) {
+    
+                console.log(downloadURL)
+             
+               dbReports.doc(saveObject.id).update( {url : downloadURL })
+           
 
-                let updates = saveObject.isCV ? {cvUrl: downloadURL} : {image: downloadURL}
-
-                dispatch('updatereport',
-                    {
-                        id: saveObject.id,
-                        updates: updates,
-                        successMessage: saveObject.successMessage
-                    })
                 commit('uploadProgress', -1)
-                showLoading(null) //encerrando o processamento
             });
         });
     }
