@@ -10,9 +10,11 @@ const routes = [
       { path: 'licencas', component: () => import('pages/admin/license.vue') },
 
      
-      { path: 'users', component: () => import('pages/admin/Users.vue') },
-      { path: 'nopermission', component: () => import('pages/admin/NoPermission.vue') },
+      { path: 'users', component: () => import('pages/admin/UsersPage.vue') },
+      { path: 'roles', component: () => import('pages/admin/userRoles.vue') },
+       { path: 'nopermission', component: () => import('pages/admin/NoPermission.vue') },
       { path: 'relatorios', component: () => import('pages/admin/Reports.vue') },
+      { path: 'pdf', component: () => import('pages/admin/viewPdf.vue') },
 
 
     ],

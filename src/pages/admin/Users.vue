@@ -80,9 +80,7 @@
   import { mapActions, mapState } from 'vuex'
   import SearchAndAddComponent from "../../components/admin/SearchAndAddComponent";
   import DialogAddEditCandidate from "../../components/admin/dialogs/DialogAddEditCandidate";
-  import UserTableRowComponent from "../../components/admin/users/UserTableRowComponent";
-  import UserTableHeadComponent from "../../components/admin/users/UserTableHeadComponent";
-
+  
 export default {
   // name: 'PageName',
   data () {
